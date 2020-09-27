@@ -11,7 +11,7 @@ $group_id = $filter_keyword;
 //$users_id_list= $db->where('user_id',$wo['user']['id'])->where('active','0')->get(T_GROUP_CHAT_USERS);
 
 if (!empty($filter_keyword)) {
-  /*  $sql   = "(
+  $sql   = "(
     `username`     LIKE '%$filter_keyword%' OR 
     `email`        LIKE '%$filter_keyword%' OR 
     `first_name`   LIKE '%$filter_keyword%' OR 
@@ -19,7 +19,7 @@ if (!empty($filter_keyword)) {
     `phone_number` LIKE '%$filter_keyword%' OR 
     `last_name`    LIKE '%$filter_keyword%'
   )";
-  */
+
   $group    = Wo_GroupData($group_id);
   //echo  $group[group_name];
   //echo  $group[group_title];
@@ -28,8 +28,8 @@ if (!empty($filter_keyword)) {
 
   $sql2 = "SELECT * FROM `wo_users` INNER JOIN `wo_group_members` ON `wo_users`.`user_id` = `wo_group_members`.`user_id` WHERE `wo_group_members`.`group_id`=$group_id ORDER by `wo_users`.`user_id` DESC";
 
-  //$users = $db->where($sql)->orderBy('user_id', 'DESC')->objectbuilder()->paginate(T_USERS, $page);
-  $users = $db->rawQuery($sql2);
+  $users = $db->where($sql)->orderBy('user_id', 'DESC')->objectbuilder()->paginate(T_USERS, $page);
+  //$users = $db->rawQuery($sql2);
 } else {
   $users = $db->objectbuilder()->orderBy('user_id', 'DESC')->paginate(T_USERS, $page);
 }
@@ -68,7 +68,7 @@ if (($page > $db->totalPages) && !empty($_GET['page-id'])) {
                       <div class="form-line">
                         <input type="text" name="query" id="query" class="form-control" value="<?php echo ($filter_keyword); ?>">
                         <label class="form-label search-form">
-                          Search for GroupID (input number for GroupID)
+                        Search for Username, E-mail,First Name, Last Name
                         </label>
                       </div>
                     </div>
@@ -86,31 +86,7 @@ if (($page > $db->totalPages) && !empty($_GET['page-id'])) {
               </form>
             </div>
           </div>
-          <div class="clearfix"></div>
-
-          <div class="table-responsive1">
-            <?php
-            if (!empty($filter_keyword)) {
-            ?>
-              Users member of Group:
-              <a href="<?php echo $group['url']; ?>">
-                <img src="<?php echo $group['avatar']; ?>" class="setting-avatar" alt="<?php echo $group['avatar'] ?> Profile Picture">
-                <?php echo  "<b>" . $group['group_title'] . "</b>";
-                ?>
-              </a>
-
-
-            <?php
-
-              //  echo '<pre>'; print_r($group); echo '</pre>';
-
-              echo  " (ID: <b>" . $group_id . "</b>";
-              echo  " - Name: <b>" . $group['group_name'] . "</b>)<br>";
-            }
-            ?>
-
-
-          </div>
+          
           <div class="clearfix"><br></div>
           <div class="table-responsive1">
             <table class="table table-bordered table-striped table-hover">
