@@ -1,0 +1,7 @@
+$myJSON = json_encode($myObj);python3 ai/dtsai/listface.py
+<?php
+exec("python3 /ai/dtsai/listface.py", $output);
+print_r($output);
+
+
+?>

@@ -1,0 +1,29 @@
+<?php
+//require_once('assets/init.php');
+if ($wo['loggedin'] == true) {
+  // echo "uid: ".$wo['user']['user_id'];
+  // echo "\n username: ".$wo['user']['username'];
+  // echo "\n sid: ".Wo_Secure($session_id);
+
+
+//if (!empty($_SESSION['user_id'])) {
+//	echo $_SESSION['user_id'];
+	
+//}
+$cmd= "9999";
+$cid= "RL3H081911250068";
+$userid=$wo['user']['user_id'];
+$username=$wo['user']['username'];
+$session_id = (!empty($_SESSION['user_id'])) ? $_SESSION['user_id'] : $_COOKIE['user_id'];
+//$sid=Wo_Secure($session_id);
+$sid=$session_id;
+
+$data='{"type":"control", "uid":"'.$userid.'", "username":"'.$username.'", "sid":"'.$sid.'","cmd":"'.$cmd.'","cid":"'.$cid.'" }';
+$client = stream_socket_client('tcp://127.0.0.1:8283');
+if(!$client)exit("can not connect");
+fwrite($client, $data);
+
+echo $data;
+}
+else echo "Ban chua login";
+?>
