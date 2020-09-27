@@ -1,3 +1,7 @@
+<?php
+$is_admin = Wo_IsAdmin();
+$is_moderoter = Wo_IsModerator();
+?>
 <div class="wow_form_fields">
     <?php $fid = '';
 		if (!empty($wo['setting']['fileds'][$wo['field']['fid']])) {
